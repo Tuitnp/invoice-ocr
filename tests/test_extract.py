@@ -1,3 +1,4 @@
+import pytest
 from extract import extract_fields
 
 def test_english_total_and_adjacent_date():
@@ -19,3 +20,30 @@ def test_missing_customer_does_not_consume_next_label():
  result=extract_fields('ชื่อลูกค้า:\nวันที่: 13/11/2569\nยอดรวมสุทธิ: 0.00')
  assert result['customer_name'] is None
  assert result['total_amount']=='0.00'
+
+@pytest.mark.parametrize('guest_label,number_label',[
+ ('GUEST NAME:', 'NO:'),
+ ('Guest Name :', 'No. :'),
+ ('guest   name：', 'no：'),
+])
+def test_guest_name_and_short_invoice_number(guest_label,number_label):
+ result=extract_fields(f'Blue River Co., Ltd.\n{guest_label} John Smith\n{number_label} INV-2026/001\nDate: 13/11/2026\nGrand Total 1,070.00')
+ assert result['customer_name']=='John Smith'
+ assert result['invoice_number']=='INV-2026/001'
+ assert result['company_name']=='Blue River Co., Ltd.'
+ assert result['invoice_date']=='13/11/2026'
+ assert result['total_amount']=='1070.00'
+
+def test_guest_name_and_number_on_following_lines():
+ result=extract_fields('GUEST NAME:\nสมชาย ใจดี\nNO:\nINV-001')
+ assert result['customer_name']=='สมชาย ใจดี'
+ assert result['invoice_number']=='INV-001'
+
+def test_empty_guest_does_not_consume_number_label():
+ result=extract_fields('GUEST NAME:\nNO: INV-001')
+ assert result['customer_name'] is None
+ assert result['invoice_number']=='INV-001'
+
+def test_short_number_does_not_match_phone_or_ordinary_words():
+ result=extract_fields('Phone NO: 0812345678\nNotice: sample\nNothing here')
+ assert result['invoice_number'] is None

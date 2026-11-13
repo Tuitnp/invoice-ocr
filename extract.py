@@ -5,8 +5,8 @@ from decimal import Decimal, InvalidOperation
 DIGITS = str.maketrans('๐๑๒๓๔๕๖๗๘๙', '0123456789')
 LABELS = {
  'company_name': r'(?:ชื่อบริษัท|ผู้ขาย|ผู้ออกใบแจ้งหนี้|company\s*name|seller|supplier|vendor)',
- 'customer_name': r'(?:ชื่อลูกค้า|ลูกค้า|ผู้ซื้อ|เรียกเก็บเงิน(?:ไปยัง)?|customer(?:\s*name)?|bill\s*to|buyer|sold\s*to)',
- 'invoice_number': r'(?:เลขที่(?:ใบแจ้งหนี้|เอกสาร|ใบกำกับภาษี)?|ใบแจ้งหนี้เลขที่|invoice\s*(?:number|no\.?|#)|document\s*(?:no\.?|number))',
+ 'customer_name': r'(?:ชื่อลูกค้า|ลูกค้า|ผู้ซื้อ|เรียกเก็บเงิน(?:ไปยัง)?|customer(?:\s*name)?|guest\s+name\b|bill\s*to|buyer|sold\s*to)',
+ 'invoice_number': r'(?:เลขที่(?:ใบแจ้งหนี้|เอกสาร|ใบกำกับภาษี)?|ใบแจ้งหนี้เลขที่|invoice\s*(?:number|no\.?|#)|document\s*(?:no\.?|number)|^no\.?\s*[:：])',
  'invoice_date': r'(?:วันที่(?:ออก(?:เอกสาร|ใบแจ้งหนี้))?|invoice\s*date|date)',
 }
 ALL_LABEL = re.compile('|'.join(LABELS.values()) + r'|ยอดรวม|total|ที่อยู่|address|tax\s*id|เลขประจำตัว', re.I)
