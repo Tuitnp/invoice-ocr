@@ -1,0 +1,10 @@
+[Unit]
+Description=Check Invoice OCR DNS and provision HTTPS
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+Unit=invoice-ocr-https.service
+
+[Install]
+WantedBy=timers.target

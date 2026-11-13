@@ -1,0 +1,8 @@
+[Unit]
+Description=Enable Invoice OCR HTTPS after DNS is ready
+After=network-online.target nginx.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/sbin/invoice-ocr-enable-https.py
+TimeoutStartSec=210

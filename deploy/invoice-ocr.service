@@ -1,0 +1,25 @@
+[Unit]
+Description=Invoice OCR web application
+After=network.target
+
+[Service]
+Type=simple
+User=invoice-ocr
+Group=invoice-ocr
+WorkingDirectory=/opt/invoice-ocr
+ExecStart=/opt/invoice-ocr/.venv/bin/python -m uvicorn app:app --host 127.0.0.1 --port 8092 --workers 1 --no-access-log --proxy-headers --forwarded-allow-ips=127.0.0.1
+Restart=on-failure
+RestartSec=3
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=OMP_NUM_THREADS=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=tmpfs
+MemoryMax=2G
+CPUQuota=200%
+TasksMax=64
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

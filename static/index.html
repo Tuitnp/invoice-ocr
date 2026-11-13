@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="th">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Invoice desk · อ่านใบแจ้งหนี้</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<header><a class="brand" href="/" aria-label="Invoice desk หน้าหลัก"><span class="mark">▤</span> Invoice desk</a><span class="language">ไทย / English</span></header>
+<main>
+<div class="intro"><h1>จากใบแจ้งหนี้ เป็นข้อมูลพร้อมใช้</h1><p>อัปโหลดเอกสารไทยหรืออังกฤษ ตรวจสอบข้อมูล แล้วดาวน์โหลดได้เลย</p></div>
+<div class="workspace">
+<section class="document" aria-labelledby="doc-title"><div class="section-head"><h2 id="doc-title">เอกสาร <span>Document</span></h2><button id="reset" class="quiet" hidden>เปลี่ยนไฟล์</button></div>
+<form id="upload-form"><label id="drop" class="drop" for="file"><span class="upload-icon" aria-hidden="true">↑</span><strong>เลือกหรือลากใบแจ้งหนี้มาวาง</strong><span>Select or drop an invoice</span><small>JPG, PNG, WEBP, PDF · ไม่เกิน 15 MB / PDF สูงสุด 10 หน้า</small><input id="file" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" aria-label="เลือกใบแจ้งหนี้"></label>
+<div id="preview-wrap" hidden><div class="file-info"><strong id="filename"></strong><span id="filesize"></span></div><img id="preview" alt="ภาพใบแจ้งหนี้ที่เลือก" hidden><iframe id="pdf-preview" title="ตัวอย่าง PDF" hidden></iframe></div>
+<button id="read" class="primary" type="submit" disabled>อ่านใบแจ้งหนี้ / Read invoice</button></form>
+<p class="privacy">ประมวลผลบนเซิร์ฟเวอร์นี้ ไม่เก็บไฟล์หลังประมวลผล และไม่ส่งไปบริการ OCR ภายนอก</p>
+<div id="status" role="status" aria-live="polite"></div>
+</section>
+<section class="result" aria-labelledby="result-title"><div class="section-head"><h2 id="result-title">ข้อมูลที่อ่านได้ <span>Extracted details</span></h2><span id="result-state" class="badge">รอเอกสาร</span></div><p class="result-help" id="help">ข้อมูลจะแสดงที่นี่หลังอ่านเอกสาร ช่องที่ไม่พบจะเว้นว่างไว้</p>
+<div id="fields">
+<label>ชื่อบริษัท <span>Company name</span><input name="company_name" placeholder="—" disabled></label>
+<label>ชื่อลูกค้า <span>Customer name</span><input name="customer_name" placeholder="—" disabled></label>
+<div class="pair"><label>เลขที่ใบแจ้งหนี้ <span>Invoice number</span><input name="invoice_number" placeholder="—" disabled></label><label>วันที่ <span>Invoice date</span><input name="invoice_date" placeholder="—" disabled></label></div>
+<label class="total">ยอดรวม <span>Total amount</span><input name="total_amount" inputmode="decimal" placeholder="—" disabled><small>ตามสกุลเงินในเอกสาร / Currency as shown on invoice</small></label>
+</div>
+<div class="exports"><button id="csv" disabled>ดาวน์โหลด CSV</button><button id="json" disabled>ดาวน์โหลด JSON</button><button id="copy" disabled>คัดลอก</button></div>
+<details><summary>ข้อความต้นฉบับที่อ่านได้ / OCR text</summary><pre id="raw">ยังไม่มีข้อความ</pre></details>
+</section>
+</div>
+<footer><span>Invoice desk</span><span>ตรวจสอบข้อมูลกับเอกสารต้นฉบับก่อนใช้งาน</span></footer>
+</main><script src="/static/app.js" defer></script>
+</body></html>
